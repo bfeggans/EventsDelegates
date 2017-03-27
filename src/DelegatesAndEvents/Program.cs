@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DelegatesAndEvents
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             WorkHandler del1 = new WorkHandler(Delegates.WorkPerformed1);
             WorkHandler del2 = new WorkHandler(Delegates.WorkPerformed2);
@@ -17,6 +17,9 @@ namespace DelegatesAndEvents
 
             int retVal = DoWork(del1);
             Console.WriteLine(retVal);
+
+            var worker = new Worker();
+            worker.DoSomeWork(7);
 
             Console.Read();
         }
@@ -31,7 +34,9 @@ namespace DelegatesAndEvents
                 continue;
             }
 
-            return del(retVal);
+            return del(new object(), new CoolEventArgs() {
+                IsCool = true,
+                Number = retVal});
         }
     }
 }
